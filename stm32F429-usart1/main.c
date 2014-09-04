@@ -105,9 +105,9 @@ void Init_LED(void){
 }
 void Loop_LED(void){
      while(1){
-          STM_EVAL_LEDOff(LED3);
-          Delayms(500);
           STM_EVAL_LEDOn(LED3);
+          Delayms(500);
+          STM_EVAL_LEDOff(LED3);
           Delayms(500); 
 
      }

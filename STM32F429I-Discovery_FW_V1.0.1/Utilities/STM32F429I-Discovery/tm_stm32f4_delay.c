@@ -44,7 +44,7 @@ void TimingDelay_Decrement(void) {
 		TM_TimingDelay--;
 	}
 }
-#elif STM32F4XX_IT
+#else
 void SysTick_Handler(void) {
 	TM_Time++;
 	if (TM_Time2 != 0x00) {
