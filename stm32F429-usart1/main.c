@@ -90,38 +90,60 @@ void USART1_Configuration(void)
     USART_Cmd(USART1, ENABLE);
 }
 
+
+void Init_LED(void){
+     STM_EVAL_LEDInit(LED3);
+     STM_EVAL_LEDInit(LED4);
+
+}
+void Loop_LED3(void){
+          STM_EVAL_LEDOn(LED3);
+          Delayms(500);
+          STM_EVAL_LEDOff(LED3);
+          Delayms(500); 
+
+}
+void Loop_LED4(void){
+          STM_EVAL_LEDOn(LED4);
+          Delayms(500);
+          STM_EVAL_LEDOff(LED4);
+          Delayms(500); 
+
+}
 void USART1_puts(char* s)
 {
     while(*s) {
         while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
         USART_SendData(USART1, *s);
         s++;
+        Loop_LED3();
     }
-}
-void Init_LED(void){
-     STM_EVAL_LEDInit(LED3);
-     STM_EVAL_LEDInit(LED4);
-
-}
-void Loop_LED(void){
-     while(1){
-          STM_EVAL_LEDOn(LED3);
-          Delayms(500);
-          STM_EVAL_LEDOff(LED3);
-          Delayms(500); 
-
-     }
 }
 /**************************************************************************************/
 int main(void)
 {
-    //RCC_Configuration();
-    //GPIO_Configuration();
-    //USART1_Configuration();
+    RCC_Configuration();
+    GPIO_Configuration();
+    USART1_Configuration();
     Init_LED();
     TM_DELAY_Init();
-    Loop_LED();
-    //while(1); // Don't want to exit
+    USART1_puts("Hello!\r\n");
+    while(1)
+    {   while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
+        Loop_LED4();
+
+        char t = USART_ReceiveData(USART1);
+        if ((t == '\r')) {
+            while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+            USART_SendData(USART1, t);
+            t = '\n';
+        }
+        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+        USART_SendData(USART1, t);
+    }
+
+    while(1); // Don't want to exit
+
 }
 #ifdef  USE_FULL_ASSERT
 
