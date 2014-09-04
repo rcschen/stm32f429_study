@@ -66,14 +66,21 @@ CFLAGS += -I$(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/inc
 CFLAGS += -D"assert_param(expr)=((void)0)"
 OBJS += \
     $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/misc.o \
+    $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dma2d.o \
+    $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_dma.o \
     $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_gpio.o \
+    $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_i2c.o \
     $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_rcc.o \
+    $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_exti.o \
     $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_usart.o \
+    $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_fmc.o \
     $(STDP)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.o
 
 # STM32F429I-Discovery Utilities
 CFLAGS += -I$(STDP)/Utilities/STM32F429I-Discovery
-
+OBJS += $(STDP)/Utilities/STM32F429I-Discovery/stm32f429i_discovery.o
+OBJS += $(STDP)/Utilities/STM32F429I-Discovery/tm_stm32f4_delay.o
+OBJS += $(STDP)/Utilities/STM32F429I-Discovery/stm32f429i_discovery_sdram.o
 
 all: $(BIN_IMAGE)
 

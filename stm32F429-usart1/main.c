@@ -98,30 +98,30 @@ void USART1_puts(char* s)
         s++;
     }
 }
+void Init_LED(void){
+     STM_EVAL_LEDInit(LED3);
+     STM_EVAL_LEDInit(LED4);
 
+}
+void Loop_LED(void){
+     while(1){
+          STM_EVAL_LEDOff(LED3);
+          Delayms(500);
+          STM_EVAL_LEDOn(LED3);
+          Delayms(500); 
+
+     }
+}
 /**************************************************************************************/
 int main(void)
 {
-    RCC_Configuration();
-    GPIO_Configuration();
-    USART1_Configuration();
-
-    USART1_puts("Hello World!\r\n");
-    USART1_puts("Just for STM32F429I Discovery verify USART1 with USB TTL Cable\r\n");
-    while(1)
-    {
-        while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
-        char t = USART_ReceiveData(USART1);
-        if ((t == '\r')) {
-            while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
-            USART_SendData(USART1, t);
-            t = '\n';
-        }
-        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
-        USART_SendData(USART1, t);
-    }
-
-    while(1); // Don't want to exit
+    //RCC_Configuration();
+    //GPIO_Configuration();
+    //USART1_Configuration();
+    Init_LED();
+    TM_DELAY_Init();
+    Loop_LED();
+    //while(1); // Don't want to exit
 }
 #ifdef  USE_FULL_ASSERT
 
